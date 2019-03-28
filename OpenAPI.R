@@ -4,7 +4,7 @@ require(XML)
 
 api_url = "https://openapi.naver.com/v1/search/blog.xml"
 
-query = URLencode(iconv("¾Èµå·ÎÀÌµå", to="UTF-8"))
+query = URLencode(iconv("ì•ˆë“œë¡œì´ë“œ", to="UTF-8"))
 query = str_c("?query=", query)
 
 client_id     = "noG7HsziobcXP4C7VaKG"
@@ -19,7 +19,7 @@ xpathSApply(xml_, "/rss/channel/item/title", xmlValue)
 xpathSApply(xml_, "/rss/channel/item/link", xmlValue)
 xpathSApply(xml_, "/rss/channel/item/description", xmlValue)
 
-# °Ë»ö °á°ú¸¦ 50°Ç Ãâ·Â (ÃÖ´ë 100°Ç)
+# ê²€ìƒ‰ ê²°ê³¼ë¥¼ 50ê±´ ì¶œë ¥ (ìµœëŒ€ 100ê±´)
 
 display_ = "&display=50"
 
@@ -29,7 +29,7 @@ xml_ = xmlParse(result)
 xpathSApply(xml_, "/rss/channel/item/title", xmlValue)
 
 
-# 101¹øÂ° °Ë»ö °á°úºÎÅÍ Ãâ·Â (ÃÖ´ë 1000°Ç)
+# 101ë²ˆì§¸ ê²€ìƒ‰ ê²°ê³¼ë¶€í„° ì¶œë ¥ (ìµœëŒ€ 1000ê±´)
 
 start_ = "&start=50"
 
@@ -38,7 +38,7 @@ result = GET(str_c(api_url, query, start_),
 xml_ = xmlParse(result)
 xpathSApply(xml_, "/rss/channel/item/title", xmlValue)
 
-# À¯»çµµ°¡ ¾Æ´Ñ ³¯Â¥¼øÀ¸·Î °Ë»öµÈ °á°ú Ãâ·Â
+# ìœ ì‚¬ë„ê°€ ì•„ë‹Œ ë‚ ì§œìˆœìœ¼ë¡œ ê²€ìƒ‰ëœ ê²°ê³¼ ì¶œë ¥
 
 sort_ = "&sort=date"
 
@@ -47,10 +47,11 @@ result = GET(str_c(api_url, query, sort_),
 xml_ = xmlParse(result)
 xpathSApply(xml_, "/rss/channel/item/title", xmlValue)
 
-# À§ÀÇ °á°ú ÀüºÎ Àû¿ë
+# ìœ„ì˜ ê²°ê³¼ ì „ë¶€ ì ìš©
 
 result = GET(str_c(api_url, query, display_, start_, sort_), 
              add_headers("X-Naver-Client-Id" = client_id, "X-Naver-Client-Secret" = client_secret))
 xml_ = xmlParse(result)
 xpathSApply(xml_, "/rss/channel/item/title", xmlValue)
+
 
