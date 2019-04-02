@@ -7,8 +7,8 @@ api_url = "https://openapi.naver.com/v1/search/blog.xml"
 query = URLencode(iconv("안드로이드", to="UTF-8"))
 query = str_c("?query=", query)
 
-client_id     = "noG7HsziobcXP4C7VaKG"
-client_secret = "je9CN9AIsl"
+client_id     = ""
+client_secret = ""
 
 result = GET(str_c(api_url, query), 
              add_headers("X-Naver-Client-Id" = client_id, "X-Naver-Client-Secret" = client_secret))
