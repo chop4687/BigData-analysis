@@ -13,11 +13,16 @@ data=read_html(url,encoding='CP949')
 while(repect){
   all=list()
   temp = data %>% html_nodes(xpath=paste0('//*[@id="NormalInfo"]/table/tbody/tr[',i,']')) %>% html_text()
+  if (length(temp) == 0) {
+    i = i + 2
+    j = j + 1
+    next
+  }
   temp = str_split(temp,"\r\n\r\n\t")
   adress = temp[[1]][1]
   temp = str_split(temp[[1]][2],"\r\n\t\r\n\t\t")
   contents = temp[[1]][1]
-  temp = gsub("½ºÅ©·¦\r\n\t\t¿ä¾àº¸±â\r\n\t\t»õÃ¢º¸±â\r\n\t\r\n\r\n\r\n","",temp[[1]][2])
+  temp = gsub("ìŠ¤í¬ëž©\r\n\t\tìš”ì•½ë³´ê¸°\r\n\t\tìƒˆì°½ë³´ê¸°\r\n\t\r\n\r\n\r\n","",temp[[1]][2])
   temp = str_split(temp,"\r\n")
   
   all$adress = adress
@@ -38,7 +43,11 @@ while(repect){
   )
   phone_number = in_data %>% html_nodes(xpath = '//*[@id="DetailView"]/div[2]/div[1]/div[2]/ul/li[2]/p[1]') %>% html_text()
   limit = in_data %>% html_nodes(xpath = '//*[@id="DetailView"]/div[2]/div[2]/div[1]/div[1]/ul') %>% html_text()
-  if (length(limit) == 0) next
+  if (length(limit) == 0) {
+    i = i + 2
+    j = j + 1
+    next
+  }
   limit=gsub("\\r","",limit)
   limit=gsub("\\t","",limit)
   limit=str_split(limit,"\\n\\n")
@@ -57,11 +66,11 @@ while(repect){
   all$people = content[[1]][3]
   
   
-  ########Condition Á¶°Ç
+  ########Condition ì¡°ê±´
   con = in_data %>% html_nodes(xpath = '//*[@id="DetailView"]/div[2]/div[2]/div[2]') %>% html_text()
   con=gsub("\\r","",con)
   con=gsub("\\t","",con)
-  con=gsub("\\n±Ù¹«Á¶°Ç\\n","",con)
+  con=gsub("\\nê·¼ë¬´ì¡°ê±´\\n","",con)
   con=str_split(con,"\\n\\n")
   
   all$long = con[[1]][2]
@@ -70,18 +79,21 @@ while(repect){
   time = in_data %>% html_nodes(xpath = '//*[@id="InfoApply"]/ul/li[1]') %>% html_text()
   time = gsub('\\r','',time)
   time = gsub('\\t','',time)
-  time = gsub('¸ðÁý¸¶°¨ÀÏ\\n','',time)
+  time = gsub('ëª¨ì§‘ë§ˆê°ì¼\\n','',time)
   time = gsub('\\n\\n','',time)
-  time = gsub('¸¶°¨ÀÓ¹Ú! ÀÔ»çÁö¿øÀ» ¼­µÑ·¯ ÁÖ¼¼¿ä.','',time)
+  time = gsub('ë§ˆê°ìž„ë°•! ìž…ì‚¬ì§€ì›ì„ ì„œë‘˜ëŸ¬ ì£¼ì„¸ìš”.','',time)
   all$deadline = time[2]
   
   com_adr = in_data %>% html_nodes(xpath = '//*[@id="InfoWork"]/ul/li[3]') %>% html_text()
-  com_adr = gsub('±Ù¹«ÁöÁÖ¼Ò ','',com_adr)
+  com_adr = gsub('ê·¼ë¬´ì§€ì£¼ì†Œ ','',com_adr)
   all$com_adr = com_adr[2]
-  if (i>100) break
+  if (i>98){
+    repect=FALSE
+  } 
   i = i + 2
   j = j + 1
   write.table(all,"test.csv",sep=',',col.names = F,append=T)
+  print(i)
 }
 
 all
