@@ -6,12 +6,18 @@ library(httr)
 
 
 
-for (l in 1:3){
+for (l in 1:2){
   repect = TRUE
   i = 1
   j = 1
   url=paste0('http://www.alba.co.kr/job/area/MainLocal.asp?page=',l,'&pagesize=50&viewtype=L&sidocd=063&gugun=&dong=&d_area=&d_areacd=&strAreaMulti=&hidJobKind=&hidJobKindMulti=&WorkTime=&searchterm=&AcceptMethod=&ElecContract=&HireTypeCD=&CareerCD=&CareercdUnRelated=&LastSchoolCD=&LastSchoolcdUnRelated=&GenderCD=&GenderUnRelated=&AgeLimit=0&AgeUnRelated=&PayCD=&PayStart=&WelfareCD=&Special=&WorkWeekCD=&WeekDays=&hidSortCnt=50&hidSortOrder=&hidSortDate=&WorkPeriodCD=&hidSort=&hidSortFilter=Y&hidListView=LIST&WsSrchKeywordWord=&hidWsearchInOut=&hidSchContainText=')
-  data=read_html(url,encoding='CP949')
+  data=vector()
+  tryCatch({
+    data<-read_html(url,encoding='CP949')},
+    error = function(e){
+      data<-read_html(url,encoding='UTF-8')
+    }
+  )
   while(repect){
     if (i>300) repect=FALSE
     all=list()
@@ -25,7 +31,7 @@ for (l in 1:3){
     adress = temp[[1]][1]
     temp = str_split(temp[[1]][2],"\r\n\t\r\n\t\t")
     contents = temp[[1]][1]
-    temp = gsub("½ºÅ©·¦\r\n\t\t¿ä¾àº¸±â\r\n\t\t»õÃ¢º¸±â\r\n\t\r\n\r\n\r\n","",temp[[1]][2])
+    temp = gsub("ìŠ¤í¬ëž©\r\n\t\tìš”ì•½ë³´ê¸°\r\n\t\tìƒˆì°½ë³´ê¸°\r\n\t\r\n\r\n\r\n","",temp[[1]][2])
     temp = str_split(temp,"\r\n")
     
     all$adress = adress
@@ -55,40 +61,40 @@ for (l in 1:3){
     limit=gsub("\\t","",limit)
     limit=str_split(limit,"\\n\\n")
     
-    all$career = limit[[1]][1]
-    all$sex = limit[[1]][2]
-    all$age = limit[[1]][3]
-    all$school = limit[[1]][4]
+    all$career = gsub("ê²½ë ¥ ","",limit[[1]][1])
+    all$sex = gsub("ì„±ë³„ ","",limit[[1]][2])
+    all$age = gsub("ì—°ë ¹ ","",limit[[1]][3])
+    all$school = gsub("í•™ë ¥ ","",limit[[1]][4])
     
     content = in_data %>% html_nodes(xpath = '//*[@id="DetailView"]/div[2]/div[2]/div[1]/div[2]') %>% html_text()
     content=gsub("\\r","",content)
     content=gsub("\\t","",content)
     content=str_split(content,"\\n\\n")
     
-    all$employ = content[[1]][2]
-    all$people = content[[1]][3]
+    all$employ = gsub("ê³ ìš©í˜•íƒœ ","",content[[1]][2])
+    all$people = gsub("ëª¨ì§‘ì¸ì› ","",content[[1]][3])
     
     
-    ########Condition Á¶°Ç
+    ########Condition ì¡°ê±´
     con = in_data %>% html_nodes(xpath = '//*[@id="DetailView"]/div[2]/div[2]/div[2]') %>% html_text()
     con=gsub("\\r","",con)
     con=gsub("\\t","",con)
-    con=gsub("\\n±Ù¹«Á¶°Ç\\n","",con)
+    con=gsub("\\nê·¼ë¬´ì¡°ê±´\\n","",con)
     con=str_split(con,"\\n\\n")
     
-    all$long = con[[1]][2]
-    all$day = con[[1]][3]
+    all$long = gsub("ê·¼ë¬´ê¸°ê°„ ","",con[[1]][2])
+    all$day = gsub("ê·¼ë¬´ìš”ì¼ ","",con[[1]][3])
     
     time = in_data %>% html_nodes(xpath = '//*[@id="InfoApply"]/ul/li[1]') %>% html_text()
     time = gsub('\\r','',time)
     time = gsub('\\t','',time)
-    time = gsub('¸ðÁý¸¶°¨ÀÏ\\n','',time)
+    time = gsub('ëª¨ì§‘ë§ˆê°ì¼\\n','',time)
     time = gsub('\\n\\n','',time)
-    time = gsub('¸¶°¨ÀÓ¹Ú! ÀÔ»çÁö¿øÀ» ¼­µÑ·¯ ÁÖ¼¼¿ä.','',time)
+    time = gsub('ë§ˆê°ìž„ë°•! ìž…ì‚¬ì§€ì›ì„ ì„œë‘˜ëŸ¬ ì£¼ì„¸ìš”.','',time)
     all$deadline = time[2]
     
     com_adr = in_data %>% html_nodes(xpath = '//*[@id="InfoWork"]/ul/li[3]') %>% html_text()
-    com_adr = gsub('±Ù¹«ÁöÁÖ¼Ò ','',com_adr)
+    com_adr = gsub('ê·¼ë¬´ì§€ì£¼ì†Œ ','',com_adr)
     all$com_adr = com_adr[2]
     
     i = i + 2
