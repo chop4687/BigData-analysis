@@ -9,6 +9,12 @@ setwd("C:/Users/korea/Documents/test")
 
 repect = TRUE
 i = 1
+if (i>100){
+  i=1
+  url=paste0('http://www.alba.co.kr/job/area/MainLocal.asp?schnm=LOCAL&viewtype=L&sidocd=063&gugun=&d_areacd=&WsSrchKeywordWord=&hidschContainText=&hidWsearchInOut=&hidSort=FREEORDER&hidSortOrder=&hidSortDate=&hidListView=LIST&hidSortCnt=50&hidSortFilter=Y&hidJobKind=&hidJobKindMulti=&page=2&hidSearchyn=N&strAreaMulti=&careercd=&lastschoolcd=&agelimit=&searchterm=&hidCareerCD=&hidLastSchoolCD=&hidLastPayCD=&hidPayStart=')
+  
+}
+  
 url=paste0('http://www.alba.co.kr/job/area/MainLocal.asp?schnm=LOCAL&viewtype=L&sidocd=063&gugun=&d_areacd=&WsSrchKeywordWord=&hidschContainText=&hidWsearchInOut=&hidSort=FREEORDER&hidSortOrder=&hidSortDate=&hidListView=LIST&hidSortCnt=50&hidSortFilter=Y&hidJobKind=&hidJobKindMulti=&page=1&hidSearchyn=N&strAreaMulti=&careercd=&lastschoolcd=&agelimit=&searchterm=&hidCareerCD=&hidLastSchoolCD=&hidLastPayCD=&hidPayStart=')
 data=vector()
 tryCatch({
@@ -28,10 +34,10 @@ while(repect){
   adress = temp[[1]][1]
   temp = str_split(temp[[1]][2],"\r\n\t\r\n\t\t")
   contents = temp[[1]][1]
-  temp = gsub("½ºÅ©·¦\r\n\t\t","",temp[[1]][2])
-  temp = gsub("¿ä¾àº¸±â\r\n\t\t","",temp)
-  temp = gsub("»õÃ¢º¸±â\r\n\t\r\n","",temp)
-  temp = gsub("ÀüÀÚ±Ù·Î°è¾à¼­\r\n\r\n","",temp)
+  temp = gsub("ìŠ¤í¬ëž©\r\n\t\t","",temp[[1]][2])
+  temp = gsub("ìš”ì•½ë³´ê¸°\r\n\t\t","",temp)
+  temp = gsub("ìƒˆì°½ë³´ê¸°\r\n\t\r\n","",temp)
+  temp = gsub("ì „ìžê·¼ë¡œê³„ì•½ì„œ\r\n\r\n","",temp)
   temp = gsub("\r","",temp)
   temp = gsub("\t","",temp)
   temp = gsub("\n\n","",temp)
@@ -65,43 +71,43 @@ while(repect){
   limit=gsub("\\t","",limit)
   limit=str_split(limit,"\\n\\n")
   
-  all$career = gsub("°æ·Â ","",limit[[1]][1])
-  all$sex = gsub("¼ºº° ","",limit[[1]][2])
-  all$age = gsub("¿¬·É ","",limit[[1]][3])
-  all$school = gsub("ÇÐ·Â ","",limit[[1]][4])
+  all$career = gsub("ê²½ë ¥ ","",limit[[1]][1])
+  all$sex = gsub("ì„±ë³„ ","",limit[[1]][2])
+  all$age = gsub("ì—°ë ¹ ","",limit[[1]][3])
+  all$school = gsub("í•™ë ¥ ","",limit[[1]][4])
   
   content = in_data %>% html_nodes(xpath = '//*[@id="DetailView"]/div[2]/div[2]/div[1]/div[2]') %>% html_text()
   content=gsub("\\r","",content)
   content=gsub("\\t","",content)
   content=str_split(content,"\\n\\n")
   
-  all$employ = gsub("°í¿ëÇüÅÂ ","",content[[1]][2])
-  all$people = gsub("¸ðÁýÀÎ¿ø ","",content[[1]][3])
+  all$employ = gsub("ê³ ìš©í˜•íƒœ ","",content[[1]][2])
+  all$people = gsub("ëª¨ì§‘ì¸ì› ","",content[[1]][3])
   
   
-  ########Condition Á¶°Ç
+  ########Condition ì¡°ê±´
   con = in_data %>% html_nodes(xpath = '//*[@id="DetailView"]/div[2]/div[2]/div[2]') %>% html_text()
   con=gsub("\\r","",con)
   con=gsub("\\t","",con)
-  con=gsub("\\n±Ù¹«Á¶°Ç\\n","",con)
+  con=gsub("\\nê·¼ë¬´ì¡°ê±´\\n","",con)
   con=str_split(con,"\\n\\n")
   
-  all$long = gsub("±Ù¹«±â°£ ","",con[[1]][2])
-  all$day = gsub("±Ù¹«¿äÀÏ ","",con[[1]][3])
+  all$long = gsub("ê·¼ë¬´ê¸°ê°„ ","",con[[1]][2])
+  all$day = gsub("ê·¼ë¬´ìš”ì¼ ","",con[[1]][3])
   
   time = in_data %>% html_nodes(xpath = '//*[@id="InfoApply"]/ul/li[1]') %>% html_text()
   time = gsub('\\r','',time)
   time = gsub('\\t','',time)
-  time = gsub('¸ðÁý¸¶°¨ÀÏ\\n','',time)
+  time = gsub('ëª¨ì§‘ë§ˆê°ì¼\\n','',time)
   time = gsub('\\n\\n','',time)
-  time = gsub('¸¶°¨ÀÓ¹Ú! ÀÔ»çÁö¿øÀ» ¼­µÑ·¯ ÁÖ¼¼¿ä.','',time)
+  time = gsub('ë§ˆê°ìž„ë°•! ìž…ì‚¬ì§€ì›ì„ ì„œë‘˜ëŸ¬ ì£¼ì„¸ìš”.','',time)
   all$deadline = time[2]
   
   com_adr = in_data %>% html_nodes(xpath = '//*[@id="InfoWork"]/ul/li[3]') %>% html_text()
-  com_adr = gsub('±Ù¹«ÁöÁÖ¼Ò ','',com_adr)
+  com_adr = gsub('ê·¼ë¬´ì§€ì£¼ì†Œ ','',com_adr)
   all$com_adr = com_adr[2]
   check=str_split(all$when,"")[[1]]
-  if (check[length(check)-1] %in% "ºÐ") {
+  if (check[length(check)-1] %in% "ë¶„") {
     repect = TRUE
   }
   else {
