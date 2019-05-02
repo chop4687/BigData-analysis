@@ -16,7 +16,7 @@ while(repect){
   adress = temp[[1]][1]
   temp = str_split(temp[[1]][2],"\r\n\t\r\n\t\t")
   contents = temp[[1]][1]
-  temp = gsub("½ºÅ©·¦\r\n\t\t¿ä¾àº¸±â\r\n\t\t»õÃ¢º¸±â\r\n\t\r\n\r\n\r\n","",temp[[1]][2])
+  temp = gsub("ìŠ¤í¬ëž©\r\n\t\tìš”ì•½ë³´ê¸°\r\n\t\tìƒˆì°½ë³´ê¸°\r\n\t\r\n\r\n\r\n","",temp[[1]][2])
   temp = str_split(temp,"\r\n")
   
   all$adress[j] = adress
@@ -49,11 +49,11 @@ while(repect){
   all$people[j] = content[[1]][3]
   
   
-  ########Condition Á¶°Ç
+  ########Condition ì¡°ê±´
   con = in_data %>% html_nodes(xpath = '//*[@id="DetailView"]/div[2]/div[2]/div[2]') %>% html_text()
   con=gsub("\\r","",con)
   con=gsub("\\t","",con)
-  con=gsub("\\n±Ù¹«Á¶°Ç\\n","",con)
+  con=gsub("\\nê·¼ë¬´ì¡°ê±´\\n","",con)
   con=str_split(con,"\\n\\n")
   
   all$long[j] = con[[1]][2]
@@ -62,7 +62,7 @@ while(repect){
   
   if (i==5) break
   check=str_split(all$when[j],"")[[1]]
-  if (check[length(check)] %in% "Àü") {
+  if (check[length(check)] %in% "ì „") {
     repect = TRUE
   }
   else {
