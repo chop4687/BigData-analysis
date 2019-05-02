@@ -7,7 +7,7 @@ library(httr)
 ##################################url read
 repect = TRUE
 i = 1
-url=paste0('http://www.alba.co.kr/job/area/MainLocal.asp?page=1&pagesize=50&viewtype=L&sidocd=063&gugun=&dong=&d_area=&d_areacd=&strAreaMulti=&hidJobKind=&hidJobKindMulti=&WorkTime=&searchterm=&AcceptMethod=&ElecContract=&HireTypeCD=&CareerCD=&CareercdUnRelated=&LastSchoolCD=&LastSchoolcdUnRelated=&GenderCD=&GenderUnRelated=&AgeLimit=0&AgeUnRelated=&PayCD=&PayStart=&WelfareCD=&Special=&WorkWeekCD=&WeekDays=&hidSortCnt=50&hidSortOrder=&hidSortDate=&WorkPeriodCD=&hidSort=&hidSortFilter=Y&hidListView=LIST&WsSrchKeywordWord=&hidWsearchInOut=&hidSchContainText=')
+url=paste0('http://www.alba.co.kr/job/area/MainLocal.asp?schnm=LOCAL&viewtype=L&sidocd=063&gugun=&d_areacd=&WsSrchKeywordWord=&hidschContainText=&hidWsearchInOut=&hidSort=FREEORDER&hidSortOrder=&hidSortDate=&hidListView=LIST&hidSortCnt=50&hidSortFilter=Y&hidJobKind=&hidJobKindMulti=&page=1&hidSearchyn=N&strAreaMulti=&careercd=&lastschoolcd=&agelimit=&searchterm=&hidCareerCD=&hidLastSchoolCD=&hidLastPayCD=&hidPayStart=')
 data=vector()
 tryCatch({
   data<-read_html(url,encoding='CP949')},
