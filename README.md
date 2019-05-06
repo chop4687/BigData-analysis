@@ -1,4 +1,4 @@
-Big Data analysis project (by web crawling)
+Big Data analysis project (web crawling)
 =============
 
 contents
@@ -12,7 +12,7 @@ contents
 
 ### 1.Why?
 
-![Alt text](/BigData-analysis/image/sample.jpg)
+!(/BigData-analysis/image/sample.JPG)
 
 대학생이라면 한번쯤은 찾아보는 아르바이트
 자리에 따라 편하고 시급이 높은 좋은 아르바이트
