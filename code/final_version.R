@@ -41,7 +41,6 @@ while(repect){
     i = i + 2
     next
   }
-  
   #########adress append
   
   temp = str_split(temp,"\r\n\r\n\t")
@@ -51,24 +50,28 @@ while(repect){
   #########contents append
   
   contents = temp[[1]][1]
-  temp = gsub("½ºÅ©·¦\r\n\t\t","",temp[[1]][2])
-  temp = gsub("¿ä¾àº¸±â\r\n\t\t","",temp)
-  temp = gsub("»õÃ¢º¸±â\r\n\t\r\n","",temp)
-  temp = gsub("ÀüÀÚ±Ù·Î°è¾à¼­\r\n\r\n","",temp)
+  temp = gsub("ìŠ¤í¬ëž©\r\n\t\t","",temp[[1]][2])
+  temp = gsub("ìš”ì•½ë³´ê¸°\r\n\t\t","",temp)
+  temp = gsub("ìƒˆì°½ë³´ê¸°\r\n\t\r\n","",temp)
+  temp = gsub("ìƒˆì°½ë³´ê¸°\r\n","",temp)
+  temp = gsub("ì „ìžê·¼ë¡œê³„ì•½ì„œ\r\n\r\n","",temp)
   temp = gsub("\r","",temp)
   temp = gsub("\t","",temp)
   temp = gsub("\n\n","",temp)
   temp = gsub("\n","kk",temp)
-  
   temp = str_split(temp,"kk")
+  k=1
+  for (l in 1:length(temp[[1]])){
+    if (length(str_split(temp[[1]][l],"")[[1]])>20) k=k+1
+  }
   
   ########input list & concat adress/contents/time/money
   
   all$adress = adress
   all$contents = contents
-  all$time = temp[[1]][1]
-  all$money = temp[[1]][2]
-  all$when = temp[[1]][3]
+  all$time = temp[[1]][k]
+  all$money = temp[[1]][k+1]
+  all$when = temp[[1]][k+2]
   
   
   #########Want to more data so detail website
@@ -99,18 +102,18 @@ while(repect){
   
   #############input list & concat career/sex/age/school
   
-  all$career = gsub("°æ·Â ","",limit[[1]][1])
-  all$sex = gsub("¼ºº° ","",limit[[1]][2])
-  all$age = gsub("¿¬·É ","",limit[[1]][3])
-  all$school = gsub("ÇÐ·Â ","",limit[[1]][4])
+  all$career = gsub("ê²½ë ¥ ","",limit[[1]][1])
+  all$sex = gsub("ì„±ë³„ ","",limit[[1]][2])
+  all$age = gsub("ì—°ë ¹ ","",limit[[1]][3])
+  all$school = gsub("í•™ë ¥ ","",limit[[1]][4])
   
   content = in_data %>% html_nodes(xpath = '//*[@id="DetailView"]/div[2]/div[2]/div[1]/div[2]') %>% html_text()
   content=gsub("\\r","",content)
   content=gsub("\\t","",content)
   content=str_split(content,"\\n\\n")
   
-  all$employ = gsub("°í¿ëÇüÅÂ ","",content[[1]][2])
-  all$people = gsub("¸ðÁýÀÎ¿ø ","",content[[1]][3])
+  all$employ = gsub("ê³ ìš©í˜•íƒœ ","",content[[1]][2])
+  all$people = gsub("ëª¨ì§‘ì¸ì› ","",content[[1]][3])
   
   
   ###############append condition/date
@@ -119,29 +122,29 @@ while(repect){
   con = in_data %>% html_nodes(xpath = '//*[@id="DetailView"]/div[2]/div[2]/div[2]') %>% html_text()
   con=gsub("\\r","",con)
   con=gsub("\\t","",con)
-  con=gsub("\\n±Ù¹«Á¶°Ç\\n","",con)
+  con=gsub("\\nê·¼ë¬´ì¡°ê±´\\n","",con)
   con=str_split(con,"\\n\\n")
   
-  all$long = gsub("±Ù¹«±â°£ ","",con[[1]][2])
-  all$day = gsub("±Ù¹«¿äÀÏ ","",con[[1]][3])
+  all$long = gsub("ê·¼ë¬´ê¸°ê°„ ","",con[[1]][2])
+  all$day = gsub("ê·¼ë¬´ìš”ì¼ ","",con[[1]][3])
   
   time = in_data %>% html_nodes(xpath = '//*[@id="InfoApply"]/ul/li[1]') %>% html_text()
   time = gsub('\\r','',time)
   time = gsub('\\t','',time)
-  time = gsub('¸ðÁý¸¶°¨ÀÏ\\n','',time)
+  time = gsub('ëª¨ì§‘ë§ˆê°ì¼\\n','',time)
   time = gsub('\\n\\n','',time)
-  time = gsub('¸¶°¨ÀÓ¹Ú! ÀÔ»çÁö¿øÀ» ¼­µÑ·¯ ÁÖ¼¼¿ä.','',time)
+  time = gsub('ë§ˆê°ìž„ë°•! ìž…ì‚¬ì§€ì›ì„ ì„œë‘˜ëŸ¬ ì£¼ì„¸ìš”.','',time)
   all$deadline = time[2]
   
   com_adr = in_data %>% html_nodes(xpath = '//*[@id="InfoWork"]/ul/li[3]') %>% html_text()
-  com_adr = gsub('±Ù¹«ÁöÁÖ¼Ò ','',com_adr)
+  com_adr = gsub('ê·¼ë¬´ì§€ì£¼ì†Œ ','',com_adr)
   all$com_adr = com_adr[2]
   
   #################Stop Method
   
   
   check=str_split(all$when,"")[[1]]
-  if (check[length(check)-1] %in% "ºÐ") {
+  if (check[length(check)-1] %in% "ë¶„") {
     repect = TRUE
   }else {
     repect = FALSE
@@ -150,12 +153,12 @@ while(repect){
   
   ############### write csv file & save
   
-  file_name=str_split(Sys.time(),"")[[1]][1:14]
+  file_name=str_split(Sys.time(),"")[[1]][1:13]
   file_name=paste0(file_name,collapse = "")
   file_name=paste0(file_name,".csv")
   file_name=gsub(" ","_",file_name)
   file_name=gsub("-","_",file_name)
-  file_name=gsub(":","_",file_name)
+  
   write.table(all,file_name,sep=',',col.names = F,append=T)
 }
 
