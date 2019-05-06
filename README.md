@@ -12,6 +12,8 @@ contents
 
 ### 1.Why?
 
+![Alt text](/BigData-analysis/image/sample.jpg)
+
 대학생이라면 한번쯤은 찾아보는 아르바이트
 자리에 따라 편하고 시급이 높은 좋은 아르바이트
 최저시급을 안챙겨주거나 매우 힘든 아르바이트
