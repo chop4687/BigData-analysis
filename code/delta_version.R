@@ -2,11 +2,16 @@
 library(rvest)
 library(stringr)
 library(httr)
+#######main
 
 
-##################################url read
+setwd("C:/Users/korea/Documents/test")
+
 repect = TRUE
 i = 1
+
+##################################url read
+
 url=paste0('http://www.alba.co.kr/job/area/MainLocal.asp?schnm=LOCAL&viewtype=L&sidocd=063&gugun=&d_areacd=&WsSrchKeywordWord=&hidschContainText=&hidWsearchInOut=&hidSort=FREEORDER&hidSortOrder=&hidSortDate=&hidListView=LIST&hidSortCnt=50&hidSortFilter=Y&hidJobKind=&hidJobKindMulti=&page=1&hidSearchyn=N&strAreaMulti=&careercd=&lastschoolcd=&agelimit=&searchterm=&hidCareerCD=&hidLastSchoolCD=&hidLastPayCD=&hidPayStart=')
 data=vector()
 tryCatch({
@@ -15,26 +20,47 @@ tryCatch({
     data<-read_html(url,encoding='UTF-8')
   }
 )
+
 ################################## data processing
+
 while(repect){
+  if (i>100){
+    i=1
+    url=paste0('http://www.alba.co.kr/job/area/MainLocal.asp?schnm=LOCAL&viewtype=L&sidocd=063&gugun=&d_areacd=&WsSrchKeywordWord=&hidschContainText=&hidWsearchInOut=&hidSort=FREEORDER&hidSortOrder=&hidSortDate=&hidListView=LIST&hidSortCnt=50&hidSortFilter=Y&hidJobKind=&hidJobKindMulti=&page=2&hidSearchyn=N&strAreaMulti=&careercd=&lastschoolcd=&agelimit=&searchterm=&hidCareerCD=&hidLastSchoolCD=&hidLastPayCD=&hidPayStart=')
+    data=vector()
+    tryCatch({
+      data<-read_html(url,encoding='CP949')},
+      error = function(e){
+        data<-read_html(url,encoding='UTF-8')
+      }
+    )
+  }
   all=list()
   temp = data %>% html_nodes(xpath=paste0('//*[@id="NormalInfo"]/table/tbody/tr[',i,']')) %>% html_text()
   if (length(temp) == 0) {
     i = i + 2
     next
   }
-  temp = str_split(temp,"\r\n\r\n\t")
   
   #########adress append
   
+  temp = str_split(temp,"\r\n\r\n\t")
   adress = temp[[1]][1]
   temp = str_split(temp[[1]][2],"\r\n\t\r\n\t\t")
   
   #########contents append
   
   contents = temp[[1]][1]
-  temp = gsub("스크랩\r\n\t\t요약보기\r\n\t\t새창보기\r\n\t\r\n\r\n\r\n","",temp[[1]][2])
-  temp = str_split(temp,"\r\n")
+  temp = gsub("스크랩\r\n\t\t","",temp[[1]][2])
+  temp = gsub("요약보기\r\n\t\t","",temp)
+  temp = gsub("새창보기\r\n\t\r\n","",temp)
+  temp = gsub("전자근로계약서\r\n\r\n","",temp)
+  temp = gsub("\r","",temp)
+  temp = gsub("\t","",temp)
+  temp = gsub("\n\n","",temp)
+  temp = gsub("\n","kk",temp)
+  
+  temp = str_split(temp,"kk")
   
   ########input list & concat adress/contents/time/money
   
@@ -47,10 +73,11 @@ while(repect){
   
   #########Want to more data so detail website
   
+  
   temp = data %>% html_nodes(xpath=paste0('//*[@id="NormalInfo"]/table/tbody/tr[',i,']','/td[2]/a'))%>% html_attr("href")
   url=paste0("http://www.alba.co.kr",temp)
   in_data=vector()
-
+  ## phone number
   tryCatch({
     in_data<<-read_html(url,encoding='CP949')},
     error = function(e){
@@ -70,7 +97,6 @@ while(repect){
   limit=gsub("\\t","",limit)
   limit=str_split(limit,"\\n\\n")
   
-  
   #############input list & concat career/sex/age/school
   
   all$career = gsub("경력 ","",limit[[1]][1])
@@ -83,12 +109,12 @@ while(repect){
   content=gsub("\\t","",content)
   content=str_split(content,"\\n\\n")
   
-  ################more employ/how many people
-  
   all$employ = gsub("고용형태 ","",content[[1]][2])
   all$people = gsub("모집인원 ","",content[[1]][3])
   
+  
   ###############append condition/date
+  
   
   con = in_data %>% html_nodes(xpath = '//*[@id="DetailView"]/div[2]/div[2]/div[2]') %>% html_text()
   con=gsub("\\r","",con)
@@ -111,21 +137,22 @@ while(repect){
   com_adr = gsub('근무지주소 ','',com_adr)
   all$com_adr = com_adr[2]
   
-  #################stop method
+  #################Stop Method
+  
   
   check=str_split(all$when,"")[[1]]
   if (check[length(check)-1] %in% "분") {
     repect = TRUE
-  }
-  else {
+  }else {
     repect = FALSE
   }
   i = i + 2
-  
-  ############append csv file
-  
-  write.table(all,"test.csv",sep=',',col.names = F,append=T)
+  file_name=str_split(Sys.time(),"")[[1]][1:16]
+  file_name=paste0(file_name,collapse = "")
+  file_name=paste0(file_name,".csv")
+  file_name=gsub(" ","_",file_name)
+  file_name=gsub("-","_",file_name)
+  file_name=gsub(":","_",file_name)
+  write.table(all,file_name,sep=',',append=T)
 }
 
-
-#all
