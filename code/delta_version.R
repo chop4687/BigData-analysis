@@ -147,6 +147,9 @@ while(repect){
     repect = FALSE
   }
   i = i + 2
+  
+  ############### write csv file & save
+  
   file_name=str_split(Sys.time(),"")[[1]][1:16]
   file_name=paste0(file_name,collapse = "")
   file_name=paste0(file_name,".csv")
