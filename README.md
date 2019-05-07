@@ -13,6 +13,7 @@ contents
 ### 1.Why?
 
 ![Alt text](./image/sample.JPG)
+![Alt text](./image/sample1.JPG)
 
 >대학생이라면 한번쯤은 찾아보는 아르바이트
 
