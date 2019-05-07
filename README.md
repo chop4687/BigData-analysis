@@ -35,6 +35,8 @@ contents
 
 ### 3. Method
 
+>R package rvest를 이용
+
 >web crawling을 통해 알바천국 홈페이지 구인글의 주소를 수집한다.
 
 >주소에 접근하여 세부사항을 보기좋게 자료를 전처리한 뒤 시간에 맞게 저장한다.
