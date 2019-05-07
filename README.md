@@ -41,9 +41,14 @@ contents
 
 >따라서 한눈에 볼 수 있게 필요로하는 정보를 데이터로 보관한다.
 
-![Alt text](./image/sample2.JPG)
+
+
 
 >관련 기사를 검색해 보았을 때 알 수 있는 사진이다.
+
+![Alt text](./image/sample2.JPG)
+
+>실제 대학생들이 아르바이트에 얼마나 관심이 많은지를 알 수 있는 사진이다.
 
 ![Alt text](./image/sample3.JPG)
 ![Alt text](./image/sample4.JPG)
