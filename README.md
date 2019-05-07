@@ -50,6 +50,8 @@ contents
 
 >실제 대학생들이 아르바이트에 얼마나 관심이 많은지를 알 수 있는 사진이다.
 
+>해당 그래프들을 통해 실제 대학생들이 필요로하는 자료가 무엇인지 알아보고자 한다.
+
 ![Alt text](./image/sample3.JPG)
 ![Alt text](./image/sample4.JPG)
 ![Alt text](./image/sample5.JPG)
