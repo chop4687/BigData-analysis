@@ -8,7 +8,10 @@ contents
 2. Idea
 3. Method
 4. Data
-5. Other
+5. Problem
+
+
+
 
 ### 1.Why?
 
@@ -56,6 +59,9 @@ contents
 ![Alt text](./image/sample4.JPG)
 ![Alt text](./image/sample5.JPG)
 
+
+
+
 ### 2.Idea
 
 >Web crawling방법을 사용하여
@@ -64,6 +70,9 @@ contents
 >각종 아르바이트 구인글에 접속하여 자료를 수집한다.
 
 >모은 데이터를 가지고 분석한다.
+
+
+
 
 ### 3. Method
 
@@ -76,6 +85,8 @@ contents
 >1시간 마다 자료를 수집한 후 csv파일에 누적시킨다.
 
 
+
+
 ### 4. Data
 
 >크롤링하는 자료 : 주소/내용/근무시간/금액/ 구인글이 올라온 시간 / 경력 / 나이 / 학력 / 근무형태
@@ -83,11 +94,15 @@ contents
 >모집인원 / 근무기간 / 근무요일 / 구인기간 / 장소
 
 
+
+
 ### 5.Problem
 
 >50~150회 가량의 자료를 알바천국에서 수집할 경우 ip가 2시간 동안 차단당한다.
 
 >이에 따라 적은양의 자료를 수시로 수집한다.
+
+
 
 
 
