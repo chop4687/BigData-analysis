@@ -1,4 +1,3 @@
-'''r
 require(httr)
 require(stringr)
 require(XML)
