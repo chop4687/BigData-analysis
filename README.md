@@ -1,4 +1,4 @@
-Big Data analysis project (web crawling)
+Project (web crawling)
 =============
 
 contents
