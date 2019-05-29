@@ -5,14 +5,14 @@
 #### 1. Data
 2019/5/?? ~ 2019/5/30 까지 약 8300여개의 아르바이트 구인 정보를 취합
 
-![Alt text](./BigData-analysis/image/image.JPG)
+![Alt text](./image/image.JPG)
 
 
 
 #### 2. 자료 요약
 
-![Alt text](./BigData-analysis/image/image1.JPG)
-![Alt text](./BigData-analysis/image/image2.JPG)
+![Alt text](./image/image1.JPG)
+![Alt text](./image/image2.JPG)
 
 #### 2. 방향성 및 하고 싶은 일
 
