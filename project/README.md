@@ -5,7 +5,7 @@
 #### 1. Data
 2019/5/?? ~ 2019/5/30 까지 약 8300여개의 아르바이트 구인 정보를 취합
 
-![Alt text](image1.JPG)
+![Alt text](image.JPG)
 
 
 
