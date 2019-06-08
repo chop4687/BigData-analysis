@@ -10,6 +10,7 @@
 2019/1/1 ~ 2019/6/10 까지 약 13000여개의 아르바이트 구인 정보를 전북대학교 구인/구직 탭에서 취합
 
 ![Alt text](image.JPG)
+![Alt text](five.JPG)
 ![Alt text](image2.JPG)
 ![Alt text](image3.JPG)
 
