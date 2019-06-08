@@ -36,6 +36,6 @@
 
 알바천국과 전북대학교 아르바이트 구인/구직 글에 차이점을 비교하고 각 사이트마다 서로 다른 특징은 무엇이고 어떤형식으로 다른지 알아본다.
 
-![Alt text](one.JPG)
+![Alt text](four.JPG)
 ![Alt text](two.JPG)
 ![Alt text](three.JPG)
